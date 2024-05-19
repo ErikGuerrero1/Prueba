@@ -18,7 +18,7 @@ class EmpresaController {
     description: string;
     */
     public async createEmpresa(req: Request, res: Response): Promise<void> {
-        const { nombre_empresa, direccion, rfc, descripcion,description} = req.body;
+        const { nombre_empresa, direccion, rfc, descripcion,description,telefono,fotito} = req.body;
         try {
             console.log("ENTRANDO...");
 
@@ -28,7 +28,9 @@ class EmpresaController {
                     direccion,
                     rfc,
                     descripcion,
-                    description
+                    description,
+                    telefono,
+                    fotito
                 })
             console.log(nuevoEmpresa);
 
@@ -43,6 +45,8 @@ class EmpresaController {
                     rfc: empresaGuardado.rfc,
                     descripcion:empresaGuardado.descripcion,
                     description:empresaGuardado.description,
+                    telefono:empresaGuardado.telefono,
+                    fotito:empresaGuardado.fotito,
                     createAt: empresaGuardado.createdAt,
                     updateAt: empresaGuardado.updatedAt
                 })
@@ -77,11 +81,11 @@ class EmpresaController {
 
     public async actualizarFotito(req: Request, res: Response): Promise<void> {
         console.log("Actualizando la variable fotito de una empresa empresas");
-       const empresas = await Empresa.findByIdAndUpdate(req.params,req.body,{new:true})
+        const { fotito } = req.body;
+
+        // Actualizar solo la variable fotito
+        const empresas = await Empresa.findByIdAndUpdate(req.params,{ fotito },{ new: true });
         res.json(empresas)
-    }
-
-
 }
 //function decodeJWT(token: any) {
 //    return (Buffer.from(token.split('.')[1], 'base64').toString());
